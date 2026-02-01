@@ -1,3 +1,4 @@
+// REQUIRED GLOBAL VARIABLES (MUST be before renderQuestions runs)
 const questionsElement = document.getElementById("questions");
 const submitBtn = document.getElementById("submit");
 const scoreDiv = document.getElementById("score");
@@ -5,13 +6,16 @@ const scoreDiv = document.getElementById("score");
 // Load progress from sessionStorage
 let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || {};
 
-// Restore score from localStorage if exists
+// Restore score if present
 const savedScore = localStorage.getItem("score");
 if (savedScore !== null) {
   scoreDiv.innerText = `Your score is ${savedScore} out of 5.`;
 }
 
-// Listen for answer selection
+// DO NOT REMOVE — provided rendering logic
+renderQuestions();
+
+// Save progress on option select
 questionsElement.addEventListener("change", (e) => {
   if (e.target.type === "radio") {
     const index = e.target.name.split("-")[1];
